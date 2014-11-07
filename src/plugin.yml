@@ -1,0 +1,16 @@
+name: NoChickenCombat
+main: de.themoep.NoChickenCombat.NoChickenCombat
+version: 0.1
+description: PLugin against combat loggers
+authors: [Phoenix616]
+commands:
+   NoChickenCombat:
+      aliases: [ncc]
+      description: Main plugin command.
+      usage: /<command>
+      permission: NoChickenCombat.admin
+      permission-message: You don't have the permission <permission>
+permissions:
+   NoChickenCombat.admin:
+      description: Gives permission to the some command
+      default: op

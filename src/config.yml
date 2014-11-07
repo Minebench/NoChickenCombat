@@ -1,0 +1,9 @@
+# Which type of damage should prevent loggout.
+# options: pvp, mobs, all
+enabled:
+- pvp
+#- mobs
+#- all
+# How many seconds the player has to wait before he can 
+# loggout without dieing after attacking/beeing attacked
+timeout: 10
