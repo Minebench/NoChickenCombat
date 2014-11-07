@@ -5,6 +5,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -21,6 +22,8 @@ public class NoChickenCombat extends JavaPlugin {
     long timeout;
 
     HashMap<UUID, Long> tagmap = new HashMap<UUID, Long>();
+
+    public HashSet<UUID> kickset = new HashSet<UUID>();
 
     private LoggoutListener ll = null;
     private PvPListener pl = null;
@@ -83,6 +86,16 @@ public class NoChickenCombat extends JavaPlugin {
 
     public void tag(Player player) {
         if (player.hasPermission("nochickencombat.exempt")) return;
-        NoChickenCombat.getPlugin().tagmap.put(player.getUniqueId(), System.currentTimeMillis());
+        this.tagmap.put(player.getUniqueId(), System.currentTimeMillis());
+    }
+
+    public boolean isTagged(Player player) {
+        if(this.tagmap.containsKey(player.getUniqueId())){
+            if(System.currentTimeMillis() < this.tagmap.get(player.getUniqueId()) + this.timeout)
+                return true;
+            else
+                this.tagmap.remove(player.getUniqueId());
+        }
+        return false;
     }
 }

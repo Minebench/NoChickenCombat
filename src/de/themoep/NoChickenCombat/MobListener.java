@@ -23,6 +23,7 @@ public class MobListener implements Listener {
 
     @EventHandler
     public void onPlayerDamageEntity(EntityDamageByEntityEvent event){
+        if(event.isCancelled()) return;
         if(event.getEntityType() != EntityType.PLAYER && event.getDamager().getType() == EntityType.PLAYER){
             NoChickenCombat.getPlugin().tag((Player) event.getDamager());
         } else if(event.getEntityType() == EntityType.PLAYER && event.getDamager().getType() != EntityType.PLAYER){

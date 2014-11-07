@@ -23,6 +23,7 @@ public class PvPListener implements Listener {
 
     @EventHandler
     public void onPlayerDamageEntity(EntityDamageByEntityEvent event){
+        if(event.isCancelled()) return;
         if(event.getEntityType() == EntityType.PLAYER && event.getDamager().getType() == EntityType.PLAYER){
             NoChickenCombat.getPlugin().tag((Player) event.getDamager());
             NoChickenCombat.getPlugin().tag((Player) event.getEntity());
