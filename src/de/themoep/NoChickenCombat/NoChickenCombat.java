@@ -1,5 +1,7 @@
 package de.themoep.NoChickenCombat;
 
+import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -9,15 +11,31 @@ import java.util.logging.Level;
 
 public class NoChickenCombat extends JavaPlugin {
 
+    private static NoChickenCombat plugin;
+
     private boolean pvp = false;
     private boolean mobs = false;
     private boolean all = false;
 
-    HashMap<UUID, Long> timeoutmap = new HashMap<UUID, Long>();
 
-    public void onEnable() {
+    long timeout;
+
+    HashMap<UUID, Long> tagmap = new HashMap<UUID, Long>();
+
+    private LoggoutListener ll = null;
+    private PvPListener pl = null;
+    private MobListener ml = null;
+    private EverythingListener el = null;
+
+    public void onEnable(){
+        this.plugin = this;
+
         this.getLogger().log(Level.INFO, "Loading Config...");
         this.saveDefaultConfig();
+
+        timeout = this.getConfig().getInt("timeout") * 1000;
+        this.getLogger().log(Level.INFO, "Combat Timeout: " + timeout + "ms");
+
         List<String> enabled = this.getConfig().getStringList("enabled");
         for(String s : enabled){
             if(s.equalsIgnoreCase("pvp")){
@@ -30,21 +48,41 @@ public class NoChickenCombat extends JavaPlugin {
         }
 
         this.getLogger().log(Level.INFO, "Registering Listeners...");
-        this.getServer().getPluginManager().registerEvents(new LoggoutListener(), this);
+        this.ll = new LoggoutListener();
+        this.getServer().getPluginManager().registerEvents(this.ll, this);
         if(all){
             pvp = false;
             mobs = false;
-            this.getServer().getPluginManager().registerEvents(new EverythingListener(), this);
+            this.el = new EverythingListener();
+            this.getServer().getPluginManager().registerEvents(this.el, this);
         } else {
-            if(pvp)
-                this.getServer().getPluginManager().registerEvents(new PvPListener(), this);
-            if(mobs)
-                this.getServer().getPluginManager().registerEvents(new MobListener(), this);
+            if (pvp) {
+                this.pl = new PvPListener();
+                this.getServer().getPluginManager().registerEvents(this.pl, this);
+            }
+            if (mobs) {
+                this.ml = new MobListener();
+                this.getServer().getPluginManager().registerEvents(this.ml, this);
+            }
         }
     }
 
     public static NoChickenCombat getPlugin(){
-        return this;
+        return plugin;
     }
 
+    public void onDisable(){
+        HandlerList.unregisterAll(this.ll);
+        if(this.el != null)
+            HandlerList.unregisterAll(this.el);
+        if(this.pl != null)
+            HandlerList.unregisterAll(this.el);
+        if(this.ml != null)
+            HandlerList.unregisterAll(this.el);
+    }
+
+    public void tag(Player player) {
+        if (player.hasPermission("nochickencombat.exempt")) return;
+        NoChickenCombat.getPlugin().tagmap.put(player.getUniqueId(), System.currentTimeMillis());
+    }
 }

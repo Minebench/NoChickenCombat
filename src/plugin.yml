@@ -8,9 +8,12 @@ commands:
       aliases: [ncc]
       description: Main plugin command.
       usage: /<command>
-      permission: NoChickenCombat.admin
+      permission: nochickencombat.admin
       permission-message: You don't have the permission <permission>
 permissions:
-   NoChickenCombat.admin:
-      description: Gives permission to the some command
+   nochickencombat.admin:
+      description: Gives permission to the admin command
+      default: op
+   nochickencombat.exempt:
+      description: Exempts the player from the anti loggout kill
       default: op
