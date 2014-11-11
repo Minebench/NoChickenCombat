@@ -1,5 +1,6 @@
-package de.themoep.NoChickenCombat;
+package de.themoep.NoChickenCombat.Listeners;
 
+import de.themoep.NoChickenCombat.NoChickenCombat;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;

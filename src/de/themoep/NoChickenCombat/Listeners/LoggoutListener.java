@@ -1,5 +1,6 @@
-package de.themoep.NoChickenCombat;
+package de.themoep.NoChickenCombat.Listeners;
 
+import de.themoep.NoChickenCombat.NoChickenCombat;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
