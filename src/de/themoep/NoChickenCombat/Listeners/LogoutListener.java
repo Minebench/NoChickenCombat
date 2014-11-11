@@ -13,13 +13,13 @@ import java.util.logging.Level;
 /**
  * Created by Phoenix616 on 07.11.2014.
  */
-public class LoggoutListener implements Listener {
+public class LogoutListener implements Listener {
 
     NoChickenCombat plugin = null;
 
-    public LoggoutListener(){
+    public LogoutListener(){
         this.plugin = NoChickenCombat.getPlugin();
-        this.plugin.getLogger().log(Level.INFO, "Registered LoggoutListener");
+        this.plugin.getLogger().log(Level.INFO, "Registered LogoutListener");
     }
 
     @EventHandler

@@ -1,7 +1,7 @@
 package de.themoep.NoChickenCombat;
 
 import de.themoep.NoChickenCombat.Listeners.EverythingListener;
-import de.themoep.NoChickenCombat.Listeners.LoggoutListener;
+import de.themoep.NoChickenCombat.Listeners.LogoutListener;
 import de.themoep.NoChickenCombat.Listeners.MobListener;
 import de.themoep.NoChickenCombat.Listeners.PvPListener;
 import org.bukkit.entity.Player;
@@ -29,7 +29,7 @@ public class NoChickenCombat extends JavaPlugin {
 
     public HashSet<UUID> kickset = new HashSet<UUID>();
 
-    private LoggoutListener ll = null;
+    private LogoutListener ll = null;
     private PvPListener pl = null;
     private MobListener ml = null;
     private EverythingListener el = null;
@@ -55,7 +55,7 @@ public class NoChickenCombat extends JavaPlugin {
         }
 
         this.getLogger().log(Level.INFO, "Registering Listeners...");
-        this.ll = new LoggoutListener();
+        this.ll = new LogoutListener();
         this.getServer().getPluginManager().registerEvents(this.ll, this);
         if(all){
             pvp = false;
