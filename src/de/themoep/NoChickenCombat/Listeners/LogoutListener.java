@@ -24,7 +24,6 @@ public class LogoutListener implements Listener {
 
     @EventHandler
     public void onPlayerLoggout(PlayerQuitEvent event){
-        this.plugin.getLogger().log(Level.INFO, "PlayerQuitEvent");
         if(this.plugin.kickset.contains(event.getPlayer().getUniqueId()))
             this.plugin.kickset.remove(event.getPlayer().getUniqueId());
         else if(event.getPlayer().getGameMode() != GameMode.CREATIVE
