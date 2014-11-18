@@ -1,7 +1,7 @@
 name: NoChickenCombat
 main: de.themoep.NoChickenCombat.NoChickenCombat
-version: 0.1
-description: PLugin against combat loggers
+version: 0.1.1
+description: Plugin against combat loggers
 authors: [Phoenix616]
 commands:
    NoChickenCombat:
