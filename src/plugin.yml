@@ -1,18 +1,21 @@
 name: NoChickenCombat
 main: de.themoep.NoChickenCombat.NoChickenCombat
-version: 0.1.1
+version: 0.1.2
 description: Plugin against combat loggers
 authors: [Phoenix616]
 commands:
-   NoChickenCombat:
+   combat:
       aliases: [ncc]
-      description: Main plugin command.
-      usage: /<command>
-      permission: nochickencombat.admin
+      description: Check if you are stil in combat.
+      usage: /<command> [reload]
+      permission: nochickencombat.command
       permission-message: You don't have the permission <permission>
 permissions:
-   nochickencombat.admin:
+   nochickencombat.command:
       description: Gives permission to the admin command
+      default: op
+   nochickencombat.reload:
+      description: Gives permission to the reload command
       default: op
    nochickencombat.exempt:
       description: Exempts the player from the anti loggout kill

@@ -4,6 +4,9 @@ import de.themoep.NoChickenCombat.Listeners.EverythingListener;
 import de.themoep.NoChickenCombat.Listeners.LogoutListener;
 import de.themoep.NoChickenCombat.Listeners.MobListener;
 import de.themoep.NoChickenCombat.Listeners.PvPListener;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,8 +40,16 @@ public class NoChickenCombat extends JavaPlugin {
     public void onEnable(){
         this.plugin = this;
 
-        this.getLogger().log(Level.INFO, "Loading Config...");
         this.saveDefaultConfig();
+
+        this.loadConfig();
+
+        this.registerListeners();
+
+    }
+
+    public void loadConfig() {
+        this.getLogger().log(Level.INFO, "Loading Config...");
 
         timeout = this.getConfig().getInt("timeout") * 1000;
         this.getLogger().log(Level.INFO, "Combat Timeout: " + timeout + "ms");
@@ -53,7 +64,9 @@ public class NoChickenCombat extends JavaPlugin {
                 all = true;
             }
         }
+    }
 
+    public void registerListeners() {
         this.getLogger().log(Level.INFO, "Registering Listeners...");
         this.ll = new LogoutListener();
         this.getServer().getPluginManager().registerEvents(this.ll, this);
@@ -72,6 +85,39 @@ public class NoChickenCombat extends JavaPlugin {
                 this.getServer().getPluginManager().registerEvents(this.ml, this);
             }
         }
+    }
+
+    public void rereadConfig() {
+        this.getLogger().log(Level.INFO, "Reloading Config...");
+        this.reloadConfig();
+
+        this.loadConfig();
+
+        this.getLogger().log(Level.INFO, "Unregistering Listeners...");
+        HandlerList.unregisterAll(this);
+
+        this.registerListeners();
+
+        this.getLogger().log(Level.INFO, "Config reloaded!");
+    }
+
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if(args.length == 1 && args[0].equalsIgnoreCase("reload") && sender.hasPermission("nochickencombat.reload")) {
+            this.rereadConfig();
+            sender.sendMessage("Config reloaded!");
+        } else if(sender.hasPermission("nochickencombat.command")) {
+            if(sender instanceof Player) {
+                Player p = (Player) sender;
+                if(this.isTagged(p)) {
+                    sender.sendMessage(ChatColor.RED + "You are tagged as in combat!");
+                } else {
+                    sender.sendMessage(ChatColor.GREEN + "You are not tagged as in combat!");
+                }
+            } else {
+                sender.sendMessage("Error: This command can only run by a player. Maybe you meant /combat reload?");
+            }
+        }
+        return true;
     }
 
     public static NoChickenCombat getPlugin(){
