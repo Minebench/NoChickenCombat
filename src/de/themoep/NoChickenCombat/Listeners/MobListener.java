@@ -31,9 +31,9 @@ public class MobListener implements Listener {
             NoChickenCombat.getPlugin().tag((Player) event.getEntity());
         } else if(event.getDamager() instanceof Projectile){
             Projectile projectile = (Projectile) event.getDamager();
-            if(event.getEntityType() != EntityType.PLAYER && projectile.getShooter().getType() == EntityType.PLAYER)
+            if(event.getEntityType() != EntityType.PLAYER && projectile.getShooter() instanceof Player)
                 NoChickenCombat.getPlugin().tag((Player) projectile.getShooter());
-            else if(event.getEntityType() == EntityType.PLAYER && projectile.getShooter().getType() != EntityType.PLAYER)
+            else if(event.getEntityType() == EntityType.PLAYER && !(projectile.getShooter() instanceof Player))
                 NoChickenCombat.getPlugin().tag((Player) event.getEntity());
         }
     }

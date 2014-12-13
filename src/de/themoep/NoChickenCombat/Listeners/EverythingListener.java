@@ -37,7 +37,7 @@ public class EverythingListener implements Listener {
             NoChickenCombat.getPlugin().tag((Player) event.getDamager());
         } else if(event.getDamager() instanceof Projectile){
             Projectile projectile = (Projectile) event.getDamager();
-            if(projectile.getShooter().getType() == EntityType.PLAYER)
+            if(projectile.getShooter() instanceof Player)
                 NoChickenCombat.getPlugin().tag((Player) projectile.getShooter());
         }
     }
